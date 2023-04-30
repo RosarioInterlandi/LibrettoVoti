@@ -2,20 +2,27 @@ package it.polito.tdp.libretto.model;
 
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
+
+import it.polito.tdp.libretto.db.VotoDAO;
 
 
 
 public class Libretto {
-	LinkedList<Voto> listaVoti;
+	List<Voto> listaVoti;
 
 	public Libretto() {
-		listaVoti = new LinkedList<Voto>();
+		VotoDAO votoDao = new VotoDAO();
+		listaVoti = votoDao.listaVoti();
 	}
 
 	public boolean add(Voto v) {
 		if (esisteDuplicato(v)||esisteConflitto(v))
 			throw new IllegalArgumentException("Voto errato" + v);
+		VotoDAO votoDAO= new VotoDAO();
+		votoDAO.creareVoto(v);
 		return listaVoti.add(v);
+		
 	}
 
 	public void stampaVotiUguali(int valore) {
